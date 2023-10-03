@@ -3,10 +3,11 @@ let toyContainer = document.getElementById("poll-section");
 let image1 = document.getElementById("image1");
 let image2 = document.getElementById("image2");
 let image3 = document.getElementById("image3");
+let ctx = document.getElementById("results-chart");
 
 // attempts
 let userClicks = 0;
-let maxClicks = 25;
+let maxClicks = 5;
 
 // Toy construct
 function Toy(name, src) {
@@ -34,7 +35,14 @@ function renderToys() {
     toy1Index === toy3Index ||
     toy2Index === toy3Index
   ) {
+    toy2Index = getRandomIndex();
     toy3Index = getRandomIndex();
+  }
+
+  // make images not repeat after attempts
+  let toy123 = [toy1Index, toy2Index, toy3Index];
+  if (toy123 === allToys.length) {
+    toy123 = getRandomIndex();
   }
 
   // change the src of our 3 images
@@ -106,13 +114,52 @@ function showResults() {
   // put a bunch of lis into a ul
   const results = document.getElementById("results");
 
-  // loop through our products and make an li for each one
+  // loop through our products and make a li for each one
   for (let i = 0; i < allToys.length; i++) {
     const li = document.createElement("li");
-    const product = allToys[i];
-    li.textContent = `${product.name} was viewed ${product.views} times, and clicked ${product.clicks} times.`;
+    const prod = allToys[i];
+    li.textContent = `${prod.name} was viewed ${prod.views} times, and clicked ${prod.clicks} times.`;
     results.appendChild(li);
   }
+  // add info to the chart
+  let chartLabels = [];
+  let chartData = [];
+  let chartClicks = [];
+  for (let i = 0; i < allToys.length; i++) {
+    const prod = allToys[i];
+    chartLabels.push(prod.name);
+    chartData.push(prod.clicks);
+    chartClicks.push(prod.views);
+  }
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: chartLabels,
+      datasets: [
+        {
+          label: "Votes",
+          data: chartData,
+          borderWidth: 4,
+          backgroundColor: "rgb(245, 242, 184)",
+          borderColor: "rgb(249, 158, 128)",
+        },
+        {
+          label: "Views",
+          data: chartClicks,
+          borderWidth: 4,
+          backgroundColor: "rgb(164, 145, 211)",
+          borderColor: "rgb(86, 94, 118)",
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+        },
+      },
+    },
+  });
 }
 
 // make the button show the results
