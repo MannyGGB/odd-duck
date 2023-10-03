@@ -1,8 +1,12 @@
 // DOM Nodes
-let toyContainer = document.getElementById("pollSection");
+let toyContainer = document.getElementById("poll-section");
 let image1 = document.getElementById("image1");
 let image2 = document.getElementById("image2");
 let image3 = document.getElementById("image3");
+
+// attempts
+let userClicks = 0;
+let maxClicks = 25;
 
 // Toy construct
 function Toy(name, src) {
@@ -53,9 +57,11 @@ function toyClick(event) {
   // check if the click is on an image
   if (event.target === toyContainer) {
     alert("Please, click on an image");
-  } else {
-    renderToys();
+  } else if (userClicks === maxClicks) {
+    alert("Thank you for your votes.");
+    return;
   }
+  userClicks++;
 
   // loop through allToys
   for (let i = 0; i < allToys.length; i++) {
@@ -64,11 +70,7 @@ function toyClick(event) {
       break;
     }
   }
-  // 25 rounds
-  let rounds = 2;
-  if (toyClick !== rounds) {
-    alert("Thank you for your contribution.");
-  }
+  renderToys();
 }
 
 // make the toys
@@ -100,3 +102,21 @@ toyContainer.addEventListener("click", toyClick);
 renderToys();
 
 //add results to the list
+function showResults() {
+  // put a bunch of lis into a ul
+  const results = document.getElementById("results");
+
+  // loop through our products and make an li for each one
+  for (let i = 0; i < allToys.length; i++) {
+    const li = document.createElement("li");
+    const product = allToys[i];
+    li.textContent = `${product.name} was viewed ${product.views} times, and clicked ${product.clicks} times.`;
+    results.appendChild(li);
+  }
+}
+
+// make the button show the results
+const viewResults = document.getElementById("view-results");
+viewResults.addEventListener("click", showResults);
+
+renderToys();

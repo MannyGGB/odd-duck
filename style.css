@@ -11,6 +11,7 @@ body {
 }
 header {
   background-color: #565e76;
+  display: flex;
 }
 main {
   width: 100%;
@@ -24,12 +25,10 @@ h1 {
   font-size: 4rem;
   color: #a491d3;
   margin: 2rem 2rem;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  grid-column-start: 2;
-  grid-column-end: 3;
+  justify-content: center;
+  align-content: center;
 }
-#pollSection {
+#poll-section {
   background-color: #565e76;
   max-height: fit-content;
   max-width: fit-content;
@@ -66,7 +65,7 @@ h1 {
   border: 5px solid #f9dad0;
 }
 
-.clicks-allowed {
+#view-results {
   background-color: #565e76;
   color: #a491d3;
   cursor: pointer;
@@ -76,10 +75,21 @@ h1 {
   margin: 1rem;
 }
 
-.clicks-allowed:hover {
+#view-results:hover {
   background-color: #f5f2b8;
   color: #565e76;
 }
+h2 {
+  font-size: 2rem;
+  text-decoration: underline;
+}
+ul {
+  margin: 1rem;
+}
+li {
+  list-style: circle;
+}
+
 article {
   width: 100%;
   grid-row-start: 3;
