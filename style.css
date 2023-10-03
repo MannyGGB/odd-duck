@@ -46,7 +46,7 @@ h1 {
   border: 5px solid transparent;
 }
 #image1:hover {
-  border: 5px solid #f9dad0;
+  border: 5px solid #f99e80;
 }
 #image2 {
   max-width: 300px;
@@ -54,7 +54,7 @@ h1 {
   border: 5px solid transparent;
 }
 #image2:hover {
-  border: 5px solid #f9dad0;
+  border: 5px solid #f99e80;
 }
 #image3 {
   max-width: 300px;
@@ -62,10 +62,11 @@ h1 {
   border: 5px solid transparent;
 }
 #image3:hover {
-  border: 5px solid #f9dad0;
+  border: 5px solid #f99e80;
 }
 
 #view-results {
+  font-weight: bold;
   background-color: #565e76;
   color: #a491d3;
   cursor: pointer;
@@ -90,16 +91,6 @@ li {
   list-style: circle;
 }
 
-article {
-  width: 100%;
-  grid-row-start: 3;
-  grid-row-end: 4;
-  grid-column-start: 2;
-  grid-column-end: 2;
-}
-article p {
-  margin-right: 2rem;
-}
 footer {
   background-color: #565e76;
   color: #a491d3;
