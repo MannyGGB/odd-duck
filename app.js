@@ -9,12 +9,16 @@ let ctx = document.getElementById("results-chart");
 let userClicks = 0;
 let maxClicks = 5;
 
+//array for local storage
+const allToys = [];
+
 // Toy construct
-function Toy(name, src) {
+function Toy(name, src, views, clicks) {
   this.name = name;
   this.src = src;
-  this.views = 0;
-  this.clicks = 0;
+  this.views = views;
+  this.clicks = clicks;
+  allToys.push(this);
 }
 
 // function to choose a random image
@@ -29,7 +33,7 @@ function renderToys() {
   let toy2Index = getRandomIndex();
   let toy3Index = getRandomIndex();
 
-  // prevent the images being the same
+  // prevent the images being the same and not repeat
   while (
     toy1Index === toy2Index ||
     toy1Index === toy3Index ||
@@ -39,11 +43,15 @@ function renderToys() {
     toy3Index = getRandomIndex();
   }
 
-  // make images not repeat after attempts
-  let toy123 = [toy1Index, toy2Index, toy3Index];
-  if (toy123 === allToys.length) {
-    toy123 = getRandomIndex();
-  }
+  //let toy123 = [toy1Index, toy2Index, toy3Index];
+  //while (toy123) {
+  //  toy123.splice(0, 1);
+  //  toy1Index = getRandomIndex();
+  //  toy123.splice(1, 1);
+  //  toy2Index = getRandomIndex();
+  //  toy123.splice(2, 1);
+  //  toy3Index = getRandomIndex();
+  //}
 
   // change the src of our 3 images
   image1.src = allToys[toy1Index].src;
@@ -67,6 +75,8 @@ function toyClick(event) {
     alert("Please, click on an image");
   } else if (userClicks === maxClicks) {
     alert("Thank you for your votes.");
+    //showResults(); to show results after finishing voting without pressing button
+    localStorage.setItem("toys", JSON.stringify(allToys));
     return;
   }
   userClicks++;
@@ -78,31 +88,36 @@ function toyClick(event) {
       break;
     }
   }
+
   renderToys();
 }
 
-// make the toys
-const allToys = [
-  new Toy("bag", "./assets/bag.jpg"),
-  new Toy("banana", "./assets/banana.jpg"),
-  new Toy("bathroom", "./assets/bathroom.jpg"),
-  new Toy("boots", "./assets/boots.jpg"),
-  new Toy("breakfast", "./assets/breakfast.jpg"),
-  new Toy("bubblegum", "./assets/bubblegum.jpg"),
-  new Toy("chair", "./assets/chair.jpg"),
-  new Toy("cthulhu", "./assets/cthulhu.jpg"),
-  new Toy("dog-duck", "./assets/dog-duck.jpg"),
-  new Toy("dragon", "./assets/dragon.jpg"),
-  new Toy("pen", "./assets/pen.jpg"),
-  new Toy("pet-sweep", "./assets/pet-sweep.jpg"),
-  new Toy("scissors", "./assets/scissors.jpg"),
-  new Toy("shark", "./assets/shark.jpg"),
-  new Toy("sweep", "./assets/sweep.png"),
-  new Toy("tauntaun", "./assets/tauntaun.jpg"),
-  new Toy("unicorn", "./assets/unicorn.jpg"),
-  new Toy("water-can", "./assets/water-can.jpg"),
-  new Toy("wine-glass", "./assets/wine-glass.jpg"),
-];
+if (localStorage.getItem("toys") === null) {
+  new Toy("bag", "./assets/bag.jpg", 0, 0);
+  new Toy("banana", "./assets/banana.jpg", 0, 0);
+  new Toy("bathroom", "./assets/bathroom.jpg", 0, 0);
+  new Toy("boots", "./assets/boots.jpg", 0, 0);
+  new Toy("breakfast", "./assets/breakfast.jpg", 0, 0);
+  new Toy("bubblegum", "./assets/bubblegum.jpg", 0, 0);
+  new Toy("chair", "./assets/chair.jpg", 0, 0);
+  new Toy("cthulhu", "./assets/cthulhu.jpg", 0, 0);
+  new Toy("dog-duck", "./assets/dog-duck.jpg", 0, 0);
+  new Toy("dragon", "./assets/dragon.jpg", 0, 0);
+  new Toy("pen", "./assets/pen.jpg", 0, 0);
+  new Toy("pet-sweep", "./assets/pet-sweep.jpg", 0, 0);
+  new Toy("scissors", "./assets/scissors.jpg", 0, 0);
+  new Toy("shark", "./assets/shark.jpg", 0, 0);
+  new Toy("sweep", "./assets/sweep.png", 0, 0);
+  new Toy("tauntaun", "./assets/tauntaun.jpg", 0, 0);
+  new Toy("unicorn", "./assets/unicorn.jpg", 0, 0);
+  new Toy("water-can", "./assets/water-can.jpg", 0, 0);
+  new Toy("wine-glass", "./assets/wine-glass.jpg", 0, 0);
+} else {
+  const toysLS = JSON.parse(localStorage.getItem("toys"));
+  for (let i = 0; i < toysLS.length; i++) {
+    new Toy(toysLS[i].name, toysLS[i].src, toysLS[i].views, toysLS[i].clicks);
+  }
+}
 
 // add the event listener to the toys
 toyContainer.addEventListener("click", toyClick);
