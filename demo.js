@@ -103,25 +103,108 @@ renderProducts();
 // make a chart
 function renderChart() {
   const ctx = document.getElementById("myChart");
+  const labels = [];
+  const views = [];
+  const clicks = [];
 
+  for (let i = 0; i < products.length; i++) {
+    labels.push(products[i].name);
+    views.push(products[i].views);
+    clicks.push(products[i].clicks);
+  }
   new Chart(ctx, {
     type: "bar",
     data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      labels: labels,
       datasets: [
         {
-          label: "# of Votes",
-          data: [12, 19, 3, 5, 2, 3],
+          label: "# of views",
+          data: views,
+          borderWidth: 1,
+        },
+        {
+          type: "line",
+          label: "# of clicks",
+          data: clicks,
           borderWidth: 1,
         },
       ],
     },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
   });
 }
+
+// const --> unchanging. If you are unsure, use const.
+// let --> changes
+
+// adding a theme to the website through local storage
+const theme = localStorage.getItem("theme");
+if (theme === "light") {
+  document.body.classList.add("light");
+} else if (theme === "dark") {
+  document.body.classList.add("dark");
+} else {
+  document.body.classList.add("light");
+  localStorage.setItem("theme", "light");
+}
+
+function toggleTheme() {
+  if (localStorage.getItem("theme") === "dark") {
+    localStorage.setItem("theme", "light");
+  } else {
+    localStorage.setItem("theme", "dark");
+  }
+
+  document.body.classList.toggle("light"); // toggle swaps from light to dark
+  document.body.classList.toggle("dark");
+}
+const themeBtn = document.getElementById("theme");
+themeBtn.addEventListener("click", toggleTheme);
+
+//Lab 13
+// create a constructor function
+function Character(name, weapon) {
+  this.name = name;
+  this.weapon = weapon;
+}
+
+// add a method to our Characters
+Character.prototype.attack = function () {
+  console.log(`${this.name} attacks with their ${this.weapon}`);
+};
+
+const charactersArray = [];
+
+function checkLocal() {
+  // get the characters from local storage and parse it so it's not a string
+  const charsFromLS = JSON.parse(localStorage.getItem("characters"));
+
+  // if that exists:
+  if (charsFromLS) {
+    // reinstantiate my array of objects one by one
+    for (let i = 0; i < charsFromLS.length; i++) {
+      const newChar = new Character(charsFromLS[i].name, charsFromLS[i].weapon);
+      charactersArray.push(newChar);
+    }
+  } else {
+    // if it doesn't exist:
+    // create our characters
+    const char1 = new Character("Tim the Preposterous", "nunchucks");
+    const char2 = new Character("GJ the Wise", "bowstaff");
+    const char3 = new Character("Vicky the Great", "Sarcasm");
+    const char4 = new Character("Demie the Demi-god", "big ol' gun");
+
+    // add them to our array
+    charactersArray.push(char1, char2, char3, char4);
+
+    // put our characters array into local storage
+    putIntoLocalStorage();
+  }
+}
+
+// put that array into localStorage after stringifying it
+function putIntoLocalStorage() {
+  const charactersStringified = JSON.stringify(charactersArray);
+  localStorage.setItem("characters", charactersStringified);
+}
+
+checkLocal();
