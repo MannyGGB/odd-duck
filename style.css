@@ -28,6 +28,26 @@ h1 {
   justify-content: center;
   align-content: center;
 }
+nav {
+  width: 65%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+button {
+  font-weight: bold;
+  background-color: #a491d3;
+  color: #565e76;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  width: max-content;
+  height: max-content;
+  margin: 1rem;
+}
+button:hover {
+  background-color: #f5f2b8;
+  color: #a491d3;
+}
 #poll-section {
   background-color: #565e76;
   max-height: fit-content;
