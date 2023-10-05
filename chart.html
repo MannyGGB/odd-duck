@@ -4,27 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="./duck.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./reset.css" />
-    <link rel="stylesheet" href="./style.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="./app.js" defer></script>
-    <title>Odd Duck Toys</title>
+    <script src="./chart.js" defer></script>
+    <link rel="stylesheet" href="./reset.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Poll Results</title>
   </head>
   <body>
     <header>
-      <img src="" alt="" />
-      <h1>Toy Poll</h1>
+      <h1>Poll Results</h1>
       <nav>
-        <a href="chart.html"> <button>Poll Results</button> </a>
+        <a href="index.html"> <button>Poll</button> </a>
       </nav>
     </header>
     <main>
-      <section id="poll-section">
-        <img id="image1" />
-        <img id="image2" />
-        <img id="image3" />
+      <section>
+        <h2>Results</h2>
+        <ul id="results"></ul>
+        <button id="view-results">View Results</button>
       </section>
+      <canvas id="results-chart"></canvas>
     </main>
-    <footer>&copy; Odd Duck Toys Ltd.</footer>
+    <footer></footer>
   </body>
 </html>
