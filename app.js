@@ -7,10 +7,12 @@ let ctx = document.getElementById("results-chart");
 
 // attempts
 let userClicks = 0;
-let maxClicks = 5;
+let maxClicks = 25;
 
 //array for local storage
 const allToys = [];
+//here we store a reference to the previous toys
+let prevToys = [];
 
 // Toy construct
 function Toy(name, src, views, clicks) {
@@ -37,21 +39,17 @@ function renderToys() {
   while (
     toy1Index === toy2Index ||
     toy1Index === toy3Index ||
-    toy2Index === toy3Index
+    toy2Index === toy3Index ||
+    prevToys.includes(toy1Index) ||
+    prevToys.includes(toy2Index) ||
+    prevToys.includes(toy3Index)
   ) {
+    toy1Index = getRandomIndex();
     toy2Index = getRandomIndex();
     toy3Index = getRandomIndex();
   }
-
-  //let toy123 = [toy1Index, toy2Index, toy3Index];
-  //while (toy123) {
-  //  toy123.splice(0, 1);
-  //  toy1Index = getRandomIndex();
-  //  toy123.splice(1, 1);
-  //  toy2Index = getRandomIndex();
-  //  toy123.splice(2, 1);
-  //  toy3Index = getRandomIndex();
-  //}
+  // empty toys array and add to the prevToys array for the next time we get new products
+  prevToys = [toy1Index, toy2Index, toy3Index];
 
   // change the src of our 3 images
   image1.src = allToys[toy1Index].src;
